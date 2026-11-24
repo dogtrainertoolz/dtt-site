@@ -1,0 +1,45 @@
+{
+  "intro": "The gear we use for reward-based training, from treat pouches to crates. Each link opens Amazon's current options, so you can compare sizes, prices and reviews.",
+  "groups": [
+    {"id": "walking", "pillar": "leash-and-walks", "title": "Walking and leash training",
+     "blurb": "Gear that makes loose-leash walking and recall practice easier, without pain.",
+     "items": [
+       {"name": "Front-clip harness", "why": "Clips at the chest and turns pulling dogs sideways, the simplest fix for pulling while you train.", "query": "front clip no pull dog harness"},
+       {"name": "6-foot flat leash", "why": "The everyday training leash. Comfortable, predictable and easy to manage.", "query": "6 ft dog leash padded handle"},
+       {"name": "Long training line (15–30 ft)", "why": "For safe recall practice and freedom in open spaces.", "query": "long line dog training leash 30 ft"},
+       {"name": "Treat pouch", "why": "Keeps rewards ready, which is half of good timing.", "query": "dog training treat pouch"}
+     ]},
+    {"id": "training", "pillar": "methods-and-gear", "title": "Training essentials",
+     "blurb": "Markers and rewards.",
+     "items": [
+       {"name": "Clicker", "why": "A precise marker for the exact moment your dog gets it right.", "query": "dog training clicker"},
+       {"name": "Soft training treats", "why": "Small, soft and quick to eat, so you can reward often.", "query": "soft dog training treats small"},
+       {"name": "Freeze-dried liver treats", "why": "High-value rewards for recall, distractions and nervous dogs.", "query": "freeze dried liver dog treats"},
+       {"name": "Basket muzzle", "why": "For safety while working with a professional on aggression. Train it with treats so it's comfortable.", "query": "basket muzzle dog"}
+     ]},
+    {"id": "puppy", "pillar": "puppy-training", "title": "Puppy setup",
+     "blurb": "Management makes puppy training dramatically easier.",
+     "items": [
+       {"name": "Crate with divider", "why": "Buy the adult size and expand the space as your puppy grows.", "query": "dog crate with divider"},
+       {"name": "Puppy playpen", "why": "A safe zone for when you can't supervise.", "query": "puppy playpen indoor"},
+       {"name": "Enzyme cleaner", "why": "Removes the scent of accidents so puppies don't return to the same spot.", "query": "enzyme cleaner pet urine"},
+       {"name": "Teething toys", "why": "Gives sore gums somewhere better to go than your hands.", "query": "puppy teething chew toy"}
+     ]},
+    {"id": "enrichment", "pillar": "tricks-and-games", "title": "Enrichment and calm",
+     "blurb": "Brain games and calming activities for a more settled dog.",
+     "items": [
+       {"name": "Snuffle mat", "why": "Turns meals into a sniffing game.", "query": "snuffle mat for dogs"},
+       {"name": "Puzzle toy", "why": "Mental exercise for busy brains. Start easy and level up.", "query": "dog puzzle toy level 2"},
+       {"name": "Stuffable rubber chew toy", "why": "Fill and freeze for long, calm chewing sessions.", "query": "stuffable rubber dog chew toy"},
+       {"name": "Lick mat", "why": "Licking is soothing for anxious or excitable dogs.", "query": "lick mat for dogs"},
+       {"name": "Flirt pole", "why": "Short, intense play for chase-loving dogs, and great for impulse control.", "query": "flirt pole for dogs"}
+     ]},
+    {"id": "home", "pillar": "problem-behaviors", "title": "Around the house",
+     "blurb": "Simple management that prevents problem behaviors.",
+     "items": [
+       {"name": "Baby gates", "why": "Create dog-free zones and calm greeting setups.", "query": "pet gate walk through"},
+       {"name": "Window privacy film", "why": "Cuts down barking at passers-by.", "query": "frosted window privacy film"},
+       {"name": "Portable dog mat", "why": "Teach \"settle\" at home, then take it everywhere.", "query": "portable dog mat travel"}
+     ]}
+  ]
+}

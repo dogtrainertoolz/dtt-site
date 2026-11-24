@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Puppy Socialization Checklist | Dog Trainer Toolz</title>
+<meta name="description" content="An interactive checklist of the people, places, sounds and experiences to introduce gently in your puppy&#x27;s first months. Your progress is saved on this device.">
+<link rel="canonical" href="https://dogtrainertoolz.com/tools/puppy-socialization-checklist/">
+<meta property="og:site_name" content="Dog Trainer Toolz">
+<meta property="og:title" content="Puppy Socialization Checklist">
+<meta property="og:description" content="An interactive checklist of the people, places, sounds and experiences to introduce gently in your puppy&#x27;s first months. Your progress is saved on this device.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dogtrainertoolz.com/tools/puppy-socialization-checklist/">
+<meta property="og:image" content="https://dogtrainertoolz.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1D2733">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Puppy Socialization Checklist", "applicationCategory": "LifestyleApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "An interactive checklist of the people, places, sounds and experiences to introduce gently in your puppy's first months. Your progress is saved on this device."}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" onclick="const n=document.getElementById('nav');const o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)">Menu</button>
+    <nav id="nav" class="nav" aria-label="Main"><a href="/tools/" aria-current=page>Free Tools</a><a href="/topics/">Training Topics</a><a href="/guides/">All Guides</a><a href="/gear/">Gear</a><a href="/about/">About</a></nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap narrow"><article class="article tool">
+<p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10a10 10 0 0 0-12 13L10 39l7 7 16-16a10 10 0 0 0 13-12l-6 6-6-2-2-6z"/><path d="M40 40l12 12"/></svg><a href="/tools/">Free tools</a></p>
+<h1>Puppy Socialization Checklist</h1><p class="lede">An interactive checklist of the people, places, sounds and experiences to introduce gently in your puppy&#x27;s first months. Your progress is saved on this device.</p>
+<div class="tool-body"><p><strong>Progress:</strong> <span id="pct">0%</span></p>
+<div class="progress"><span id="bar"></span></div>
+<div id="list"></div>
+<button class="ghost no-print" id="reset">Reset checklist</button> <button class="ghost no-print" onclick="window.print()">Print</button>
+<script>
+(function(){
+const groups={
+ "People":["Men with beards or hats","People wearing sunglasses or masks","Children (calm, supervised)","Older adults and people using canes or wheelchairs","People in uniforms or high-visibility vests","A friendly visitor coming to the door"],
+ "Animals":["A calm, vaccinated adult dog","A friendly puppy at a supervised class","A cat (at a safe distance)","Birds, squirrels or livestock from a distance"],
+ "Places":["A car ride that ends somewhere fun","A pet-friendly store","A quiet park bench to watch the world","The vet clinic, just for treats","A friend's house"],
+ "Surfaces":["Grass, gravel and sand","Slippery floors","Stairs (a few steps, supported)","A wobbly cushion or mat","Metal grates or a bridge"],
+ "Sounds":["Vacuum cleaner","Doorbell and knocking","Traffic and trucks","Thunder and fireworks recordings (very low volume)","Hair dryer or blender"],
+ "Handling":["Touching paws and nails","Looking in ears and mouth","Brushing","Wearing a collar and harness","Being gently held and lifted"],
+ "Everyday life":["Being alone for short periods","Resting in a crate or pen","Umbrellas opening","Bicycles, skateboards and strollers going by","Calm time on a mat in a busy room"]
+};
+const KEY='dtt-socialization-v1';
+let done={}; try{done=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){done={}}
+const list=document.getElementById('list'); let html='', all=0;
+for(const [g,items] of Object.entries(groups)){html+=`<h3>${g}</h3><ul class="checklist">`;items.forEach((t,i)=>{const id=g+'|'+i;all++;html+=`<li><input type="checkbox" id="c${all}" data-k="${id}" ${done[id]?'checked':''}><label for="c${all}" style="margin:0;font-weight:400">${t}</label></li>`});html+='</ul>';}
+list.innerHTML=html;
+function upd(){const boxes=[...list.querySelectorAll('input')];const n=boxes.filter(b=>b.checked).length;const p=Math.round(100*n/boxes.length);document.getElementById('pct').textContent=p+'% ('+n+' of '+boxes.length+')';document.getElementById('bar').style.width=p+'%';}
+list.addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;done[k]=e.target.checked;try{localStorage.setItem(KEY,JSON.stringify(done))}catch(err){}upd();});
+document.getElementById('reset').addEventListener('click',()=>{done={};try{localStorage.removeItem(KEY)}catch(e){}list.querySelectorAll('input').forEach(b=>b.checked=false);upd();});
+upd();
+})();
+</script><div class="prose tool-notes"><h2>How to use it</h2>
+<p>Puppies have a sensitive period for socialization, roughly from 3 to 14 weeks of age, when new experiences are easiest to accept. That window overlaps with the time before vaccines are complete, so the goal is <strong>safe, positive exposure</strong>: carry your puppy, avoid areas where unknown dogs gather, and choose puppy classes that require vaccinations.</p>
+<ul>
+<li><strong>Quality beats quantity.</strong> Your puppy should stay relaxed. Pair each new thing with treats, keep it brief and let your puppy watch from a distance first.</li>
+<li><strong>Never force it.</strong> If your puppy hides, freezes or tries to escape, move further away and try again another day.</li>
+<li><strong>Keep going after 14 weeks.</strong> Socialization continues through adolescence.</li>
+</ul>
+<p>Full guide: <a href="/puppy-socialization/">puppy socialization</a>.</p></div></div>
+<p class="note">This tool gives general guidance. Every dog is different. Ask your vet about your dog's health, diet and vaccination timing.</p>
+</article><section class="block"><h2 class="label">Related guides</h2><div class="grid two"><article class="card has-img">
+  <a class="thumb" href="/puppy-socialization/" tabindex="-1" aria-hidden="true"><img src="/img/puppy-socialization-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="16" ry="14"/><path d="M18 30l-6-14 12 6M46 30l6-14-12 6"/><circle cx="26" cy="36" r="1.5"/><circle cx="38" cy="36" r="1.5"/><path d="M29 44h6"/></svg>Puppy Training</p><h3><a href="/puppy-socialization/">Puppy Socialization: Raising a Confident Dog</a></h3>
+  <p class="dek">What socialization really means, the window you can&#x27;t afford to miss, and how to do it safely before vaccines are finished.</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/first-week-with-a-new-puppy/" tabindex="-1" aria-hidden="true"><img src="/img/first-week-with-a-new-puppy-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="16" ry="14"/><path d="M18 30l-6-14 12 6M46 30l6-14-12 6"/><circle cx="26" cy="36" r="1.5"/><circle cx="38" cy="36" r="1.5"/><path d="M29 44h6"/></svg>Puppy Training</p><h3><a href="/first-week-with-a-new-puppy/">Your New Puppy&#x27;s First Week: A Day-by-Day Guide</a></h3>
+  <p class="dek">What to set up before you bring your puppy home, and the routines that make the first week calmer for everyone.</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/how-to-stop-my-dog-being-scared-of-fireworks/" tabindex="-1" aria-hidden="true"><img src="/img/how-to-stop-my-dog-being-scared-of-fireworks-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8l26 46H6z"/><path d="M32 26v12M32 44v2"/></svg>Problem Behaviors</p><h3><a href="/how-to-stop-my-dog-being-scared-of-fireworks/">Helping a Dog Who&#x27;s Scared of Fireworks and Thunder</a></h3>
+  <p class="dek">Noise fear is common and real. How to help your dog through the night, and how to reduce the fear long-term.</p>
+  <p class="meta">2 min read</p></div>
+</article></div></section></div>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand light" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+      <p>Free dog training tools and clear, reward-based training plans for puppies, basic commands, leash walking and common problem behaviors like barking, jumping and biting.</p>
+    </div>
+    <div><h4>Topics</h4><ul><li><a href="/topics/puppy-training/">Puppy Training</a></li><li><a href="/topics/basic-commands/">Basic Commands</a></li><li><a href="/topics/leash-and-walks/">Leash &amp; Walks</a></li><li><a href="/topics/problem-behaviors/">Problem Behaviors</a></li><li><a href="/topics/methods-and-gear/">Methods &amp; Gear</a></li><li><a href="/topics/tricks-and-games/">Tricks &amp; Games</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/tools/">Free tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="/gear/">Training gear</a></li>
+      <li><a href="/about/">About</a></li><li><a href="/contact/">Contact &amp; advertising</a></li>
+      <li><a href="/privacy-policy/">Privacy</a></li><li><a href="/affiliate-disclaimer/">Affiliate disclosure</a></li><li><a href="/terms/">Terms</a></li><li><a href="/photo-credits/">Photo credits</a></li></ul></div>
+  </div>
+  <div class="wrap foot-note"><p><strong>Aggression or serious fear?</strong> If your dog has bitten, or you're worried they might, work with a veterinarian and a qualified behavior professional rather than training alone.</p>
+  <p>© 2026 Dog Trainer Toolz. Guides are general information, not a substitute for your veterinarian. As an Amazon Associate we earn from qualifying purchases.</p></div>
+</footer>
+</body>
+</html>

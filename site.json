@@ -1,0 +1,30 @@
+{
+  "name": "Dog Trainer Toolz",
+  "domain": "https://dogtrainertoolz.com",
+  "tagline": "Free tools and step-by-step plans to train your dog at home.",
+  "description": "Free dog training tools and clear, reward-based training plans for puppies, basic commands, leash walking and common problem behaviors like barking, jumping and biting.",
+  "contact_email": "hello@dogtrainertoolz.com",
+  "amazon_tag": "dogtrainerz2026-20",
+  "featured_guides": [
+    "how-to-potty-train-your-puppy",
+    "how-to-stop-puppy-biting",
+    "how-to-stop-your-dog-pulling-on-the-leash",
+    "how-to-teach-your-dog-recall",
+    "how-to-stop-your-dog-barking",
+    "how-to-stop-your-dog-jumping-up"
+  ],
+  "pillars": [
+    {"slug": "puppy-training", "name": "Puppy Training", "icon": "puppy",
+     "blurb": "Potty training, crate training, biting, chewing and socialization: everything for the first months."},
+    {"slug": "basic-commands", "name": "Basic Commands", "icon": "sit",
+     "blurb": "Sit, down, stay, come, leave it and getting your dog's attention, taught step by step."},
+    {"slug": "leash-and-walks", "name": "Leash & Walks", "icon": "leash",
+     "blurb": "Loose-leash walking, heel, reactivity and when to let your dog off leash."},
+    {"slug": "problem-behaviors", "name": "Problem Behaviors", "icon": "alert",
+     "blurb": "Barking, jumping, digging, guarding, separation anxiety, fear and hyperactivity, plus when to call a professional."},
+    {"slug": "methods-and-gear", "name": "Methods & Gear", "icon": "tools",
+     "blurb": "How reward-based training works, clickers, treats, harnesses, choosing a trainer and choosing the right dog."},
+    {"slug": "tricks-and-games", "name": "Tricks & Games", "icon": "star",
+     "blurb": "Tricks, brain games and ways to tire out your dog that build a better bond."}
+  ]
+}

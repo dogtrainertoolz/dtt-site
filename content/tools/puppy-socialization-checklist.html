@@ -1,0 +1,43 @@
+---
+title: Puppy Socialization Checklist
+order: 3
+icon: puppy
+dek: An interactive checklist of the people, places, sounds and experiences to introduce gently in your puppy's first months. Your progress is saved on this device.
+related: puppy-socialization first-week-with-a-new-puppy how-to-stop-my-dog-being-scared-of-fireworks
+---
+<p><strong>Progress:</strong> <span id="pct">0%</span></p>
+<div class="progress"><span id="bar"></span></div>
+<div id="list"></div>
+<button class="ghost no-print" id="reset">Reset checklist</button> <button class="ghost no-print" onclick="window.print()">Print</button>
+<script>
+(function(){
+const groups={
+ "People":["Men with beards or hats","People wearing sunglasses or masks","Children (calm, supervised)","Older adults and people using canes or wheelchairs","People in uniforms or high-visibility vests","A friendly visitor coming to the door"],
+ "Animals":["A calm, vaccinated adult dog","A friendly puppy at a supervised class","A cat (at a safe distance)","Birds, squirrels or livestock from a distance"],
+ "Places":["A car ride that ends somewhere fun","A pet-friendly store","A quiet park bench to watch the world","The vet clinic, just for treats","A friend's house"],
+ "Surfaces":["Grass, gravel and sand","Slippery floors","Stairs (a few steps, supported)","A wobbly cushion or mat","Metal grates or a bridge"],
+ "Sounds":["Vacuum cleaner","Doorbell and knocking","Traffic and trucks","Thunder and fireworks recordings (very low volume)","Hair dryer or blender"],
+ "Handling":["Touching paws and nails","Looking in ears and mouth","Brushing","Wearing a collar and harness","Being gently held and lifted"],
+ "Everyday life":["Being alone for short periods","Resting in a crate or pen","Umbrellas opening","Bicycles, skateboards and strollers going by","Calm time on a mat in a busy room"]
+};
+const KEY='dtt-socialization-v1';
+let done={}; try{done=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){done={}}
+const list=document.getElementById('list'); let html='', all=0;
+for(const [g,items] of Object.entries(groups)){html+=`<h3>${g}</h3><ul class="checklist">`;items.forEach((t,i)=>{const id=g+'|'+i;all++;html+=`<li><input type="checkbox" id="c${all}" data-k="${id}" ${done[id]?'checked':''}><label for="c${all}" style="margin:0;font-weight:400">${t}</label></li>`});html+='</ul>';}
+list.innerHTML=html;
+function upd(){const boxes=[...list.querySelectorAll('input')];const n=boxes.filter(b=>b.checked).length;const p=Math.round(100*n/boxes.length);document.getElementById('pct').textContent=p+'% ('+n+' of '+boxes.length+')';document.getElementById('bar').style.width=p+'%';}
+list.addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;done[k]=e.target.checked;try{localStorage.setItem(KEY,JSON.stringify(done))}catch(err){}upd();});
+document.getElementById('reset').addEventListener('click',()=>{done={};try{localStorage.removeItem(KEY)}catch(e){}list.querySelectorAll('input').forEach(b=>b.checked=false);upd();});
+upd();
+})();
+</script>
+
+## How to use it
+
+Puppies have a sensitive period for socialization, roughly from 3 to 14 weeks of age, when new experiences are easiest to accept. That window overlaps with the time before vaccines are complete, so the goal is **safe, positive exposure**: carry your puppy, avoid areas where unknown dogs gather, and choose puppy classes that require vaccinations.
+
+- **Quality beats quantity.** Your puppy should stay relaxed. Pair each new thing with treats, keep it brief and let your puppy watch from a distance first.
+- **Never force it.** If your puppy hides, freezes or tries to escape, move further away and try again another day.
+- **Keep going after 14 weeks.** Socialization continues through adolescence.
+
+Full guide: [puppy socialization](/puppy-socialization/).

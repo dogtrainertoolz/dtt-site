@@ -1,0 +1,52 @@
+---
+title: Puppy Potty Schedule Generator
+order: 1
+icon: puppy
+dek: Enter your puppy's age and your day, and get a printable potty-break schedule built around how long puppies can really hold it.
+related: how-to-potty-train-your-puppy how-to-crate-train-a-puppy first-week-with-a-new-puppy
+---
+<div class="row">
+  <div><label for="age">Puppy's age (weeks)</label><input id="age" type="number" min="7" max="52" value="10"></div>
+  <div><label for="wake">Wake-up time</label><input id="wake" type="time" value="06:30"></div>
+  <div><label for="bed">Bedtime</label><input id="bed" type="time" value="22:00"></div>
+  <div><label for="meals">Meals per day</label><select id="meals"><option>2</option><option selected>3</option><option>4</option></select></div>
+</div>
+<button id="go">Make my schedule</button><button class="ghost no-print" onclick="window.print()">Print</button>
+<div id="out" class="result" aria-live="polite"></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+const fmt=m=>{m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60,ap=h>=12?'pm':'am';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap};
+function make(){
+  const wk=Math.max(7,Math.min(52,+$('age').value||10)), months=wk/4.33;
+  const hold=Math.min(8,Math.max(1,Math.floor(months)+1)); // rule of thumb: months + 1 hours, capped
+  const wake=toMin($('wake').value), bed=toMin($('bed').value)+( toMin($('bed').value)<=toMin($('wake').value)?1440:0);
+  const meals=+$('meals').value, ev=[];
+  ev.push([wake,'Wake up: straight outside (carry young puppies)']);
+  const span=bed-wake-120;
+  for(let i=0;i<meals;i++){const t=wake+30+Math.round(i*span/Math.max(1,meals-1||1)); if(meals===1&&i>0)break; ev.push([t,'Meal']); ev.push([t+15,'Potty break after eating']);}
+  let t=wake; while(t+hold*60<bed){t+=Math.min(hold*60, wk<12?60:hold*60); ev.push([t,'Potty break']);}
+  ev.push([bed-15,'Last potty break before bed']);
+  const nightGap=wk<12?3:wk<16?4:0;
+  if(nightGap){for(let n=bed+nightGap*60;n<wake+1440-60;n+=nightGap*60) ev.push([n,'Night potty trip: quick and boring, straight back to bed']);}
+  ev.sort((a,b)=>a[0]-b[0]);
+  const seen=new Set(), rows=ev.filter(e=>{const k=e[0]+e[1];if(seen.has(k))return false;seen.add(k);return true})
+    .filter((e,i,a)=>!(e[1]==='Potty break'&&a.some(x=>x!==e&&x[1]!=='Potty break'&&x[1]!=='Meal'&&Math.abs(x[0]-e[0])<25)));
+  $('out').innerHTML=`<p><strong>At ${wk} weeks</strong>, plan for your puppy to hold it about <strong>${hold} hour${hold>1?'s':''}</strong> at most when awake and calm${wk<12?', and often less: take very young puppies out about every hour':''}.</p>
+  <table><thead><tr><th>Time</th><th>What to do</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r[0])}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>
+  <p><strong>Also go out:</strong> right after naps, after play or chewing sessions, and any time your puppy starts sniffing, circling or wandering off.</p>`;
+}
+$('go').addEventListener('click',make); make();
+})();
+</script>
+
+## How the schedule works
+
+A common rule of thumb is that puppies can hold their bladder for about **one hour per month of age, plus one**, up to around 8 hours, when they're awake and calm. Excitement, play, eating, drinking and waking up all make them need to go sooner. That's why the schedule adds breaks after meals and first thing in the morning.
+
+- **Under 12 weeks:** take your puppy out roughly every hour while awake, plus after every meal, nap and play session.
+- **Night trips:** young puppies usually need one or two trips during the night. Keep them quick, quiet and boring.
+- **Every puppy is different.** Use this as a starting point and adjust to your puppy's patterns.
+
+Full guide: [how to potty train your puppy](/how-to-potty-train-your-puppy/).

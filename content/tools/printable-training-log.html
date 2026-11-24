@@ -1,0 +1,33 @@
+---
+title: Printable Dog Training Log
+order: 4
+icon: sit
+dek: Create a two-week training log for the skills you're working on, then print it and stick it on the fridge.
+related: dog-training-101-how-to-teach-the-basics positive-reinforcement-training-with-dogs how-to-teach-your-dog-recall
+---
+<div class="row no-print">
+  <div><label for="dog">Dog's name</label><input id="dog" type="text" placeholder="e.g. Tim"></div>
+  <div><label for="skills">Skills (comma-separated)</label><input id="skills" type="text" value="Sit, Down, Recall, Loose-leash walking"></div>
+  <div><label for="start">Start date</label><input id="start" type="date"></div>
+</div>
+<button id="go" class="no-print">Make my log</button><button class="ghost no-print" onclick="window.print()">Print</button>
+<div id="out" style="margin-top:20px"></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const d=new Date(); $('start').value=d.toISOString().slice(0,10);
+function make(){
+  const name=esc($('dog').value.trim()||'My dog'); const skills=$('skills').value.split(',').map(s=>esc(s.trim())).filter(Boolean).slice(0,6);
+  const start=new Date($('start').value+'T12:00:00'); let rows='';
+  for(let i=0;i<14;i++){const day=new Date(start);day.setDate(start.getDate()+i);rows+=`<tr><td>${day.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}</td>${skills.map(()=>'<td></td>').join('')}<td></td></tr>`;}
+  $('out').innerHTML=`<h2>${name}'s training log</h2><p class="muted">For each skill, note how many reps you did and how many your dog got right (e.g. 8/10). Move up a level when your dog gets 8 out of 10.</p>
+  <table class="log-table"><thead><tr><th>Day</th>${skills.map(s=>`<th>${s}</th>`).join('')}<th>Notes</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+$('go').addEventListener('click',make); make();
+})();
+</script>
+
+## Why keep a log?
+
+Progress in dog training is often slow enough that you don't notice it. A simple log shows you what's working, when your dog is ready to move up a level, and when to make things easier. The 8-out-of-10 rule is a good guide: when your dog gets it right 8 times out of 10, add a little more distance, duration or distraction.

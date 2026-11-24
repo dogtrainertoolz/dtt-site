@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Puppy Potty Schedule Generator | Dog Trainer Toolz</title>
+<meta name="description" content="Enter your puppy&#x27;s age and your day, and get a printable potty-break schedule built around how long puppies can really hold it.">
+<link rel="canonical" href="https://dogtrainertoolz.com/tools/potty-schedule-generator/">
+<meta property="og:site_name" content="Dog Trainer Toolz">
+<meta property="og:title" content="Puppy Potty Schedule Generator">
+<meta property="og:description" content="Enter your puppy&#x27;s age and your day, and get a printable potty-break schedule built around how long puppies can really hold it.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dogtrainertoolz.com/tools/potty-schedule-generator/">
+<meta property="og:image" content="https://dogtrainertoolz.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1D2733">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Puppy Potty Schedule Generator", "applicationCategory": "LifestyleApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Enter your puppy's age and your day, and get a printable potty-break schedule built around how long puppies can really hold it."}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" onclick="const n=document.getElementById('nav');const o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)">Menu</button>
+    <nav id="nav" class="nav" aria-label="Main"><a href="/tools/" aria-current=page>Free Tools</a><a href="/topics/">Training Topics</a><a href="/guides/">All Guides</a><a href="/gear/">Gear</a><a href="/about/">About</a></nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap narrow"><article class="article tool">
+<p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10a10 10 0 0 0-12 13L10 39l7 7 16-16a10 10 0 0 0 13-12l-6 6-6-2-2-6z"/><path d="M40 40l12 12"/></svg><a href="/tools/">Free tools</a></p>
+<h1>Puppy Potty Schedule Generator</h1><p class="lede">Enter your puppy&#x27;s age and your day, and get a printable potty-break schedule built around how long puppies can really hold it.</p>
+<div class="tool-body"><div class="row">
+  <div><label for="age">Puppy's age (weeks)</label><input id="age" type="number" min="7" max="52" value="10"></div>
+  <div><label for="wake">Wake-up time</label><input id="wake" type="time" value="06:30"></div>
+  <div><label for="bed">Bedtime</label><input id="bed" type="time" value="22:00"></div>
+  <div><label for="meals">Meals per day</label><select id="meals"><option>2</option><option selected>3</option><option>4</option></select></div>
+</div>
+<button id="go">Make my schedule</button><button class="ghost no-print" onclick="window.print()">Print</button>
+<div id="out" class="result" aria-live="polite"></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const toMin=t=>{const [h,m]=t.split(':').map(Number);return h*60+m};
+const fmt=m=>{m=((m%1440)+1440)%1440;let h=Math.floor(m/60),mm=m%60,ap=h>=12?'pm':'am';h=h%12||12;return h+':'+String(mm).padStart(2,'0')+' '+ap};
+function make(){
+  const wk=Math.max(7,Math.min(52,+$('age').value||10)), months=wk/4.33;
+  const hold=Math.min(8,Math.max(1,Math.floor(months)+1)); // rule of thumb: months + 1 hours, capped
+  const wake=toMin($('wake').value), bed=toMin($('bed').value)+( toMin($('bed').value)<=toMin($('wake').value)?1440:0);
+  const meals=+$('meals').value, ev=[];
+  ev.push([wake,'Wake up: straight outside (carry young puppies)']);
+  const span=bed-wake-120;
+  for(let i=0;i<meals;i++){const t=wake+30+Math.round(i*span/Math.max(1,meals-1||1)); if(meals===1&&i>0)break; ev.push([t,'Meal']); ev.push([t+15,'Potty break after eating']);}
+  let t=wake; while(t+hold*60<bed){t+=Math.min(hold*60, wk<12?60:hold*60); ev.push([t,'Potty break']);}
+  ev.push([bed-15,'Last potty break before bed']);
+  const nightGap=wk<12?3:wk<16?4:0;
+  if(nightGap){for(let n=bed+nightGap*60;n<wake+1440-60;n+=nightGap*60) ev.push([n,'Night potty trip: quick and boring, straight back to bed']);}
+  ev.sort((a,b)=>a[0]-b[0]);
+  const seen=new Set(), rows=ev.filter(e=>{const k=e[0]+e[1];if(seen.has(k))return false;seen.add(k);return true})
+    .filter((e,i,a)=>!(e[1]==='Potty break'&&a.some(x=>x!==e&&x[1]!=='Potty break'&&x[1]!=='Meal'&&Math.abs(x[0]-e[0])<25)));
+  $('out').innerHTML=`<p><strong>At ${wk} weeks</strong>, plan for your puppy to hold it about <strong>${hold} hour${hold>1?'s':''}</strong> at most when awake and calm${wk<12?', and often less: take very young puppies out about every hour':''}.</p>
+  <table><thead><tr><th>Time</th><th>What to do</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fmt(r[0])}</td><td>${r[1]}</td></tr>`).join('')}</tbody></table>
+  <p><strong>Also go out:</strong> right after naps, after play or chewing sessions, and any time your puppy starts sniffing, circling or wandering off.</p>`;
+}
+$('go').addEventListener('click',make); make();
+})();
+</script><div class="prose tool-notes"><h2>How the schedule works</h2>
+<p>A common rule of thumb is that puppies can hold their bladder for about <strong>one hour per month of age, plus one</strong>, up to around 8 hours, when they're awake and calm. Excitement, play, eating, drinking and waking up all make them need to go sooner. That's why the schedule adds breaks after meals and first thing in the morning.</p>
+<ul>
+<li><strong>Under 12 weeks:</strong> take your puppy out roughly every hour while awake, plus after every meal, nap and play session.</li>
+<li><strong>Night trips:</strong> young puppies usually need one or two trips during the night. Keep them quick, quiet and boring.</li>
+<li><strong>Every puppy is different.</strong> Use this as a starting point and adjust to your puppy's patterns.</li>
+</ul>
+<p>Full guide: <a href="/how-to-potty-train-your-puppy/">how to potty train your puppy</a>.</p></div></div>
+<p class="note">This tool gives general guidance. Every dog is different. Ask your vet about your dog's health, diet and vaccination timing.</p>
+</article><section class="block"><h2 class="label">Related guides</h2><div class="grid two"><article class="card has-img">
+  <a class="thumb" href="/how-to-potty-train-your-puppy/" tabindex="-1" aria-hidden="true"><img src="/img/how-to-potty-train-your-puppy-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="16" ry="14"/><path d="M18 30l-6-14 12 6M46 30l6-14-12 6"/><circle cx="26" cy="36" r="1.5"/><circle cx="38" cy="36" r="1.5"/><path d="M29 44h6"/></svg>Puppy Training</p><h3><a href="/how-to-potty-train-your-puppy/">How to Potty Train Your Puppy: A Step-by-Step Plan</a></h3>
+  <p class="dek">A simple routine of frequent breaks, rewards and supervision that gets most puppies reliably house-trained, without punishment.</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/how-to-crate-train-a-puppy/" tabindex="-1" aria-hidden="true"><img src="/img/how-to-crate-train-a-puppy-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="16" ry="14"/><path d="M18 30l-6-14 12 6M46 30l6-14-12 6"/><circle cx="26" cy="36" r="1.5"/><circle cx="38" cy="36" r="1.5"/><path d="M29 44h6"/></svg>Puppy Training</p><h3><a href="/how-to-crate-train-a-puppy/">How to Crate Train a Puppy (Without the Crying)</a></h3>
+  <p class="dek">Turn the crate into your puppy&#x27;s favorite den, step by step, plus how to handle the first nights and crying.</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/first-week-with-a-new-puppy/" tabindex="-1" aria-hidden="true"><img src="/img/first-week-with-a-new-puppy-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="16" ry="14"/><path d="M18 30l-6-14 12 6M46 30l6-14-12 6"/><circle cx="26" cy="36" r="1.5"/><circle cx="38" cy="36" r="1.5"/><path d="M29 44h6"/></svg>Puppy Training</p><h3><a href="/first-week-with-a-new-puppy/">Your New Puppy&#x27;s First Week: A Day-by-Day Guide</a></h3>
+  <p class="dek">What to set up before you bring your puppy home, and the routines that make the first week calmer for everyone.</p>
+  <p class="meta">2 min read</p></div>
+</article></div></section></div>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand light" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+      <p>Free dog training tools and clear, reward-based training plans for puppies, basic commands, leash walking and common problem behaviors like barking, jumping and biting.</p>
+    </div>
+    <div><h4>Topics</h4><ul><li><a href="/topics/puppy-training/">Puppy Training</a></li><li><a href="/topics/basic-commands/">Basic Commands</a></li><li><a href="/topics/leash-and-walks/">Leash &amp; Walks</a></li><li><a href="/topics/problem-behaviors/">Problem Behaviors</a></li><li><a href="/topics/methods-and-gear/">Methods &amp; Gear</a></li><li><a href="/topics/tricks-and-games/">Tricks &amp; Games</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/tools/">Free tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="/gear/">Training gear</a></li>
+      <li><a href="/about/">About</a></li><li><a href="/contact/">Contact &amp; advertising</a></li>
+      <li><a href="/privacy-policy/">Privacy</a></li><li><a href="/affiliate-disclaimer/">Affiliate disclosure</a></li><li><a href="/terms/">Terms</a></li><li><a href="/photo-credits/">Photo credits</a></li></ul></div>
+  </div>
+  <div class="wrap foot-note"><p><strong>Aggression or serious fear?</strong> If your dog has bitten, or you're worried they might, work with a veterinarian and a qualified behavior professional rather than training alone.</p>
+  <p>© 2026 Dog Trainer Toolz. Guides are general information, not a substitute for your veterinarian. As an Amazon Associate we earn from qualifying purchases.</p></div>
+</footer>
+</body>
+</html>

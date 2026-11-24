@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Printable Dog Training Log | Dog Trainer Toolz</title>
+<meta name="description" content="Create a two-week training log for the skills you&#x27;re working on, then print it and stick it on the fridge.">
+<link rel="canonical" href="https://dogtrainertoolz.com/tools/printable-training-log/">
+<meta property="og:site_name" content="Dog Trainer Toolz">
+<meta property="og:title" content="Printable Dog Training Log">
+<meta property="og:description" content="Create a two-week training log for the skills you&#x27;re working on, then print it and stick it on the fridge.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dogtrainertoolz.com/tools/printable-training-log/">
+<meta property="og:image" content="https://dogtrainertoolz.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1D2733">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Printable Dog Training Log", "applicationCategory": "LifestyleApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Create a two-week training log for the skills you're working on, then print it and stick it on the fridge."}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav" onclick="const n=document.getElementById('nav');const o=n.classList.toggle('open');this.setAttribute('aria-expanded',o)">Menu</button>
+    <nav id="nav" class="nav" aria-label="Main"><a href="/tools/" aria-current=page>Free Tools</a><a href="/topics/">Training Topics</a><a href="/guides/">All Guides</a><a href="/gear/">Gear</a><a href="/about/">About</a></nav>
+  </div>
+</header>
+<main id="main">
+<div class="wrap narrow"><article class="article tool">
+<p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10a10 10 0 0 0-12 13L10 39l7 7 16-16a10 10 0 0 0 13-12l-6 6-6-2-2-6z"/><path d="M40 40l12 12"/></svg><a href="/tools/">Free tools</a></p>
+<h1>Printable Dog Training Log</h1><p class="lede">Create a two-week training log for the skills you&#x27;re working on, then print it and stick it on the fridge.</p>
+<div class="tool-body"><div class="row no-print">
+  <div><label for="dog">Dog's name</label><input id="dog" type="text" placeholder="e.g. Tim"></div>
+  <div><label for="skills">Skills (comma-separated)</label><input id="skills" type="text" value="Sit, Down, Recall, Loose-leash walking"></div>
+  <div><label for="start">Start date</label><input id="start" type="date"></div>
+</div>
+<button id="go" class="no-print">Make my log</button><button class="ghost no-print" onclick="window.print()">Print</button>
+<div id="out" style="margin-top:20px"></div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const d=new Date(); $('start').value=d.toISOString().slice(0,10);
+function make(){
+  const name=esc($('dog').value.trim()||'My dog'); const skills=$('skills').value.split(',').map(s=>esc(s.trim())).filter(Boolean).slice(0,6);
+  const start=new Date($('start').value+'T12:00:00'); let rows='';
+  for(let i=0;i<14;i++){const day=new Date(start);day.setDate(start.getDate()+i);rows+=`<tr><td>${day.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}</td>${skills.map(()=>'<td></td>').join('')}<td></td></tr>`;}
+  $('out').innerHTML=`<h2>${name}'s training log</h2><p class="muted">For each skill, note how many reps you did and how many your dog got right (e.g. 8/10). Move up a level when your dog gets 8 out of 10.</p>
+  <table class="log-table"><thead><tr><th>Day</th>${skills.map(s=>`<th>${s}</th>`).join('')}<th>Notes</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+$('go').addEventListener('click',make); make();
+})();
+</script><div class="prose tool-notes"><h2>Why keep a log?</h2>
+<p>Progress in dog training is often slow enough that you don't notice it. A simple log shows you what's working, when your dog is ready to move up a level, and when to make things easier. The 8-out-of-10 rule is a good guide: when your dog gets it right 8 times out of 10, add a little more distance, duration or distraction.</p></div></div>
+<p class="note">This tool gives general guidance. Every dog is different. Ask your vet about your dog's health, diet and vaccination timing.</p>
+</article><section class="block"><h2 class="label">Related guides</h2><div class="grid two"><article class="card has-img">
+  <a class="thumb" href="/dog-training-101-how-to-teach-the-basics/" tabindex="-1" aria-hidden="true"><img src="/img/dog-training-101-how-to-teach-the-basics-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 54V36l8-14h10l6 10v22"/><circle cx="34" cy="14" r="6"/><path d="M14 54h36"/></svg>Basic Commands</p><h3><a href="/dog-training-101-how-to-teach-the-basics/">Dog Training 101: How to Teach Any Dog the Basics</a></h3>
+  <p class="dek">The four principles behind every skill, and how to use them to teach &quot;sit&quot; in a single session.</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/positive-reinforcement-training-with-dogs/" tabindex="-1" aria-hidden="true"><img src="/img/positive-reinforcement-training-with-dogs-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M38 10a10 10 0 0 0-12 13L10 39l7 7 16-16a10 10 0 0 0 13-12l-6 6-6-2-2-6z"/><path d="M40 40l12 12"/></svg>Methods &amp; Gear</p><h3><a href="/positive-reinforcement-training-with-dogs/">Positive Reinforcement: Why Reward-Based Training Works</a></h3>
+  <p class="dek">What reward-based training actually is, what the research says, and why it&#x27;s not &quot;just bribing your dog.&quot;</p>
+  <p class="meta">2 min read</p></div>
+</article><article class="card has-img">
+  <a class="thumb" href="/how-to-teach-your-dog-recall/" tabindex="-1" aria-hidden="true"><img src="/img/how-to-teach-your-dog-recall-sm.jpg" alt="" width="720" height="480" loading="lazy"></a><div class="card-body"><p class="kicker"><svg class="ico sm" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 54V36l8-14h10l6 10v22"/><circle cx="34" cy="14" r="6"/><path d="M14 54h36"/></svg>Basic Commands</p><h3><a href="/how-to-teach-your-dog-recall/">How to Teach Your Dog to Come When Called</a></h3>
+  <p class="dek">A reliable recall can save your dog&#x27;s life. How to make &quot;come&quot; the best word your dog knows, and the mistakes that ruin it.</p>
+  <p class="meta">2 min read</p></div>
+</article></div></section></div>
+</main>
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand light" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="14"/><g><ellipse cx="32" cy="38" rx="10" ry="8.5"/><ellipse cx="19" cy="27" rx="4.2" ry="6"/><ellipse cx="27" cy="18" rx="4.2" ry="6"/><ellipse cx="37" cy="18" rx="4.2" ry="6"/><ellipse cx="45" cy="27" rx="4.2" ry="6"/></g></svg><span>Dog Trainer <b>Toolz</b></span></a>
+      <p>Free dog training tools and clear, reward-based training plans for puppies, basic commands, leash walking and common problem behaviors like barking, jumping and biting.</p>
+    </div>
+    <div><h4>Topics</h4><ul><li><a href="/topics/puppy-training/">Puppy Training</a></li><li><a href="/topics/basic-commands/">Basic Commands</a></li><li><a href="/topics/leash-and-walks/">Leash &amp; Walks</a></li><li><a href="/topics/problem-behaviors/">Problem Behaviors</a></li><li><a href="/topics/methods-and-gear/">Methods &amp; Gear</a></li><li><a href="/topics/tricks-and-games/">Tricks &amp; Games</a></li></ul></div>
+    <div><h4>Site</h4><ul>
+      <li><a href="/tools/">Free tools</a></li><li><a href="/guides/">All guides</a></li><li><a href="/gear/">Training gear</a></li>
+      <li><a href="/about/">About</a></li><li><a href="/contact/">Contact &amp; advertising</a></li>
+      <li><a href="/privacy-policy/">Privacy</a></li><li><a href="/affiliate-disclaimer/">Affiliate disclosure</a></li><li><a href="/terms/">Terms</a></li><li><a href="/photo-credits/">Photo credits</a></li></ul></div>
+  </div>
+  <div class="wrap foot-note"><p><strong>Aggression or serious fear?</strong> If your dog has bitten, or you're worried they might, work with a veterinarian and a qualified behavior professional rather than training alone.</p>
+  <p>© 2026 Dog Trainer Toolz. Guides are general information, not a substitute for your veterinarian. As an Amazon Associate we earn from qualifying purchases.</p></div>
+</footer>
+</body>
+</html>
